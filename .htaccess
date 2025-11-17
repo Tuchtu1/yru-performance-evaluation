@@ -1,0 +1,25 @@
+# .htaccess at root (yru-performance-evaluation/.htaccess)
+
+# Disable directory listing
+
+Options -Indexes
+
+# Set default files
+
+DirectoryIndex index.php index.html
+
+# Enable Rewrite Engine
+
+RewriteEngine On
+
+# Allow access to api folder
+
+RewriteRule ^api/ - [L]
+
+# Allow access to assets folder
+
+RewriteRule ^assets/ - [L]
+
+# Allow access to config/api-config.php
+
+RewriteRule ^config/api-config\.php$ - [L]
