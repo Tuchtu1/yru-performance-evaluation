@@ -7,7 +7,6 @@
 
 define('APP_ROOT', __DIR__);
 require_once APP_ROOT . '/config/app.php';
-session_start();
 
 // ถ้า login แล้วให้ไป dashboard
 if (isset($_SESSION['user'])) {
