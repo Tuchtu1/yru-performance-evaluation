@@ -368,7 +368,7 @@ $page_title = $page_title ?? APP_NAME;
 
     <!-- Top Navigation Bar -->
     <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="w-full px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <!-- Logo & App Name -->
                 <div class="flex items-center">
