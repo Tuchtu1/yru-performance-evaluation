@@ -62,6 +62,18 @@ $details = $db->prepare("
 $details->execute([$evaluation_id]);
 $evaluation_details = $details->fetchAll();
 
+// Get evaluators
+$evaluators_sql = "
+    SELECT u.user_id as id, u.full_name_th as fullname, u.position, ee.selection_order as evaluator_order
+    FROM evaluation_managers ee
+    JOIN users u ON ee.manager_user_id = u.user_id
+    WHERE ee.evaluation_id = :evaluation_id
+    ORDER BY ee.selection_order
+";
+$evaluators_stmt = $db->prepare($evaluators_sql);
+$evaluators_stmt->execute(['evaluation_id' => $evaluation_id]);
+$evaluators = $evaluators_stmt->fetchAll();
+
 // Group by aspect
 $grouped_details = [];
 foreach ($evaluation_details as $detail) {
@@ -233,11 +245,51 @@ include '../../includes/header.php';
             </div>
         </div>
 
-        <!-- TODO: Evaluator Details -->
+        <!-- Evaluator Details -->
+        <div class="card flex flex-col gap-y-2 p-6 bg-white rounded-lg shadow">
+            <div class="card-header">
+                <h3 class="text-lg font-semibold">รายชื่อผู้ประเมิน</h3>
+            </div>
+            <div class="card-body">
+                <?php if (!empty($evaluators)): ?>
+                    <div class="space-y-3">
+                        <?php foreach ($evaluators as $evaluator): ?>
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <div class="flex items-center space-x-3">
+                                    <div class="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                        <span class="text-blue-600 font-semibold text-sm"><?php echo $evaluator['evaluator_order']; ?></span>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-gray-800"><?php echo htmlspecialchars($evaluator['fullname']); ?></p>
+                                        <p class="text-sm text-gray-600"><?php echo htmlspecialchars($evaluator['position'] ?? '-'); ?></p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                        ผู้ประเมินคนที่ <?php echo $evaluator['evaluator_order']; ?>
+                                    </span>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-200">
+                        <p class="text-sm text-gray-600">
+                            <i class="fas fa-info-circle text-blue-500 mr-1"></i>
+                            มีผู้ประเมินทั้งหมด <?php echo count($evaluators); ?> คนสำหรับแบบประเมินนี้
+                        </p>
+                    </div>
+                <?php else: ?>
+                    <div class="text-center py-8">
+                        <i class="fas fa-users text-gray-400 text-4xl mb-4"></i>
+                        <p class="text-gray-600">ยังไม่ได้กำหนดผู้ประเมินสำหรับแบบประเมินนี้</p>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
 
         <!-- Evaluation Details -->
         <?php if (!empty($grouped_details)): ?>
-            <div class="card flex flex-col gap-y-6 p-6 bg-white rounded-lg shadow">
+            <div class="card flex flex-col gap-y-2 p-6 bg-white rounded-lg shadow">
                 <div class="card-header">
                     <h3 class="text-lg font-semibold">รายละเอียดการประเมิน</h3>
                 </div>
