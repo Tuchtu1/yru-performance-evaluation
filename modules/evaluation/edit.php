@@ -764,6 +764,14 @@ include APP_ROOT . '/includes/header.php';
 
     // Confirm before submit
     document.getElementById('evaluationForm').addEventListener('submit', function(e) {
+        // Check if any evaluators are selected
+        const selectedEvaluators = document.querySelectorAll('#selectedEvaluators input[type="hidden"]');
+        if (selectedEvaluators.length === 0) {
+            alert('กรุณาเลือกผู้ประเมินอย่างน้อย 1 คนก่อนบันทึกแบบประเมิน');
+            e.preventDefault();
+            return;
+        }
+
         if (!confirm('คุณแน่ใจหรือไม่ว่าต้องการบันทึกการแก้ไขแบบประเมิน?')) {
             e.preventDefault();
         }
