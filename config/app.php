@@ -11,9 +11,9 @@ if (!defined('APP_ROOT')) {
     define('APP_ROOT', dirname(__DIR__));
 }
 
-// ตั้งค่า URL
+// ตั้งค่า URL // TODO: APP_URL -> .env
 if (!defined('APP_URL')) {
-    define('APP_URL', 'http://localhost/yru-performance-evaluation');
+    define('APP_URL', 'http://localhost:8000');
 }
 
 // ตั้งค่าทั่วไป

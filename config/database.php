@@ -11,10 +11,10 @@ if (!defined('APP_ROOT')) {
     die('Access Denied');
 }
 
-// ตั้งค่าการเชื่อมต่อฐานข้อมูล
-define('DB_HOST', 'localhost');
+// ตั้งค่าการเชื่อมต่อฐานข้อมูล // TODO: DB_... -> .env
+define('DB_HOST', 'localhost:8889');
 define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_PASS', 'root');
 define('DB_NAME', 'yru_evaluation');
 define('DB_CHARSET', 'utf8mb4');
 
