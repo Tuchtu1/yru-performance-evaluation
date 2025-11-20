@@ -21,7 +21,7 @@ $evaluation_id = $_GET['id'] ?? 0;
 // ==================== Fetch Evaluation Data ====================
 
 $eval = $db->prepare("
-    SELECT e.*, 
+    SELECT e.*,
            ep.period_name, ep.year, ep.semester, ep.start_date, ep.end_date,
            u.full_name_th, u.email, u.position,
            pt.type_name_th as personnel_type_name,
@@ -183,7 +183,7 @@ include '../../includes/header.php';
     <div class="lg:col-span-2 space-y-6">
 
         <!-- Evaluation Info -->
-        <div class="card">
+        <div class="card p-6 bg-white rounded-lg shadow">
             <div class="card-header">
                 <h3 class="text-lg font-semibold">ข้อมูลแบบประเมิน</h3>
             </div>
@@ -233,13 +233,15 @@ include '../../includes/header.php';
             </div>
         </div>
 
+        <!-- TODO: Evaluator Details -->
+
         <!-- Evaluation Details -->
         <?php if (!empty($grouped_details)): ?>
-            <div class="card">
+            <div class="card flex flex-col gap-y-6 p-6 bg-white rounded-lg shadow">
                 <div class="card-header">
                     <h3 class="text-lg font-semibold">รายละเอียดการประเมิน</h3>
                 </div>
-                <div class="card-body space-y-6">
+                <div class="card-body flex flex-col gap-y-10">
                     <?php foreach ($grouped_details as $aspect_id => $aspect): ?>
                         <div class="border-l-4 border-blue-500 pl-4">
                             <div class="flex items-center justify-between mb-3">
@@ -369,7 +371,7 @@ include '../../includes/header.php';
 
         <!-- Actions -->
         <?php if ($evaluation['user_id'] == $user_id): ?>
-            <div class="card">
+            <div class="card flex flex-col space-y-2">
                 <div class="card-header">
                     <h3 class="text-lg font-semibold">การดำเนินการ</h3>
                 </div>
@@ -378,7 +380,7 @@ include '../../includes/header.php';
                         <a href="edit.php?id=<?php echo $evaluation_id; ?>" class="btn btn-primary w-full">
                             แก้ไขแบบประเมิน
                         </a>
-                        <a href="submit.php?id=<?php echo $evaluation_id; ?>" class="btn btn-success w-full">
+                        <a href="submit.php?id=<?php echo $evaluation_id; ?>" class="btn btn-outline w-full">
                             ส่งแบบประเมิน
                         </a>
                     <?php elseif ($evaluation['status'] == 'returned'): ?>
@@ -395,7 +397,7 @@ include '../../includes/header.php';
 
         <!-- Period Info -->
         <div class="card bg-blue-50">
-            <div class="card-body">
+            <div class="card-body p-[10px] rounded-lg shadow">
                 <h4 class="font-semibold text-blue-900 mb-3">ข้อมูลรอบการประเมิน</h4>
                 <div class="space-y-2 text-sm">
                     <div class="flex justify-between">
